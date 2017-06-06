@@ -1,27 +1,29 @@
-// /*global define*/
-// /*jshint esversion: 6*/
-// define([
-//   'esri/layers/FeatureLayer',
-//   'esri/renderers/SimpleRenderer',
-//   'utils/symbolUtil'
-// ], function(FeatureLayer, SimpleRenderer, symbolUtil) {
+/*global define*/
+/*jshint esversion: 6*/
+define([
+  'esri/layers/FeatureLayer'
+], function(FeatureLayer) {
 
-//   function loadServices(config) {
-//     var layers = [],
-//     // census tract
-//       censusLayer = new F1atureLayer('http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/CensusLaborDemo/FeatureServer/1'),
-//     // feature renderer
-//       renderer = new SimpleRenderer(symbolUtil.renderSymbol());
+  function loadServices() {
+    var layers = [], censusLayer;
+    // census tract
+      censusLayer = new FeatureLayer(
+        'http://services.arcgis.com/V6ZHFr6zdgNZuVG0/' +
+        'arcgis/rest/services/' +
+        'CensusLaborDemo/FeatureServer/1'
+        );
+    // feature renderer
+      //renderer = new SimpleRenderer(symbolUtil.renderSymbol());
 
-//     censusLayer.setRenderer(renderer);
+    //censusLayer.setRenderer(renderer);
 
-//     layers.push(censusLayer);
+    layers.push(censusLayer);
 
-//     return layers;
-//   }
+    return layers;
+  }
 
-//   return {
-//     loadServices: loadServices
-//   };
+  return {
+    loadServices: loadServices
+  };
 
-// });
+});

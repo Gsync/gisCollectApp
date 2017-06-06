@@ -19,13 +19,15 @@ define([
     // public methods
     load: function() {
       var deferred = new Deferred(),
-        mapLoaded = lang.hitch(this, function() {
+        layersAdded = lang.hitch(this, function() {
       deferred.resolve(this.map);
         });
 
         this.map = new Map(this.options.elem, this.options.mapOptions);
 
-        on.once(this.map, 'load', mapLoaded);
+        on.once(this.map, 'layers-add-result', layersAdded);
+
+        this.map.addLayers(this.options.layers);
 
 
         return deferred.promise;
