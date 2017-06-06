@@ -24,9 +24,9 @@
       name: 'widgets',
       location: locationPath + 'js/widgets'
     }, {
-      name: 'app',
+      name: 'giscollecapp',
       location: locationPath + 'js'
     }]
-  }, ['app']);
+  }, ['giscollecapp']);
 
 })();
