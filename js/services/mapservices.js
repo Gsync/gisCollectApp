@@ -1,11 +1,13 @@
 /*global define*/
 /*jshint esversion: 6*/
 define([
-  'esri/layers/FeatureLayer'
-], function(FeatureLayer) {
+  'esri/layers/FeatureLayer',
+  'esri/renderers/SimpleRenderer',
+  'utils/symbolUtil'
+], function(FeatureLayer, SimpleRenderer, symbolUtil) {
 
-  function loadServices() {
-    var layers = [], censusLayer;
+  function loadServices(config) {
+    var layers = [], censusLayer, renderer;
     // census tract
       censusLayer = new FeatureLayer(
         'http://services.arcgis.com/V6ZHFr6zdgNZuVG0/' +
@@ -13,9 +15,9 @@ define([
         'CensusLaborDemo/FeatureServer/1'
         );
     // feature renderer
-      //renderer = new SimpleRenderer(symbolUtil.renderSymbol());
+      renderer = new SimpleRenderer(symbolUtil.renderSymbol());
 
-    //censusLayer.setRenderer(renderer);
+      censusLayer.setRenderer(renderer);
 
     layers.push(censusLayer);
 
