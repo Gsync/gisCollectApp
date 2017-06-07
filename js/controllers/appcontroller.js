@@ -5,9 +5,9 @@ define([
 ], function (MapController, EditTools) {
 
   function mapLoaded(map) {
-    var editTools = new EditTools({
-      map: map
-    }, 'map-tools');
+    // var editTools = new EditTools({
+    //   map: map
+    // }, 'map-tools');
   }
 
   function init(config) {
