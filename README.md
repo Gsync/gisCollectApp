@@ -7,4 +7,4 @@
 
 ### Snapshot
 
-![App Snapshot](/snapshots/giscollect.jpg?raw=true "App Snapshot Image")
+![App Snapshot](./snapshots/giscollect.jpg?raw=true "App Snapshot Image")
