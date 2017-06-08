@@ -45,26 +45,19 @@ define([
         this.handler.pause();
       this.own(
         this.handler,
-        on(this.domNode, '.btn-edit:click', lang.hitch(this, '_toggleEditButton'))
+        on(this.domNode, '.btn-edit:click', lang.hitch(this, '_toggleEditButton')),
+        on(this.domNode, '.btn-sync:click', lang.hitch(this, '_syncLocal'))
       );
     },
 
-    // // start widget
-    // startup: function() {
-    //   this._init();
-    // },
-
-    // // cleanup
-    // destroy: function() {
-    //   // default destroy
-    //   this.inherited(arguments);
-    // },
-
-    // public methods
+    _syncLocal: function() {
+      if (this.editService.hasLocal) {
+        this.editService.sync();
+      }
+    },
 
     // widget methods
     _addRequest: function() {
-      //this.editing = !this.editing;
       this._toggleEditButton();
     },
 
