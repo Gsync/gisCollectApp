@@ -58,7 +58,7 @@ define([
     },
 
     add: function(adds) {
-      var deferred = new Deferred(),
+      var deferred = new Deferred(), req;
       req = this.layer.applyEdits(adds);
       req.then(
         function() {

@@ -13,12 +13,13 @@ define([
   'dojo/dom-class',
   'esri/graphic',
   // template
+  'widgets/edit/editService',
+  'utils/symbolUtil',
   'text!widgets/edit/editTools.tpl.html'
-], function(declare, lang, on, query, _WidgetBase, _TemplatedMixin, domAttr, domClass, Graphic, template) {
+], function(declare, lang, on, query, _WidgetBase, _TemplatedMixin, domAttr, domClass, Graphic, EditService, symbolUtil, template) {
 
   return declare([_WidgetBase, _TemplatedMixin], {
 
-    //declaredClass: 'widgets.edit.EditTools',
 
     templateString: template,
     options: {},
@@ -33,8 +34,10 @@ define([
       this.options = options || {};
       this.map = this.options.map;
       this.requestLayer = this.map.getLayer('Requests');
-      // widget node
-      //this.domNode = srcRefNode;
+
+      this.editService = new EditService({
+        layer: this.requestLayer
+      });
 
     },
 
@@ -49,17 +52,18 @@ define([
         on(this.domNode, '.btn-sync:click', lang.hitch(this, '_syncLocal'))
       );
     },
+    // widget methods
+    _addRequest: function() {
+      this._toggleEditButton();
+    },
 
     _syncLocal: function() {
+      console.debug('has Local?', this.editService.hasLocal);
       if (this.editService.hasLocal) {
         this.editService.sync();
       }
     },
 
-    // widget methods
-    _addRequest: function() {
-      this._toggleEditButton();
-    },
 
     _addPoint: function(e) {
        var mapPt = e.mapPoint,
@@ -72,16 +76,20 @@ define([
            attributes.RequestDate = new Date().getTime();
            attributes.CensusTract = census.attributes.NAME;
            attributes.Description = description;
-           graphic = new Graphic(mapPt, null, attributes);
-            this.requestLayer.applyEdits([graphic]).then(lang.hitch(this, function() {
-             this._toggleEditButton();
-             alert('Request submitted');
-           }));
+           graphic = new Graphic(mapPt, symbolUtil.simpleMarker(), attributes);
+            this.editService.add([graphic]).then(
+              lang.hitch(this, function() {
+                this._toggleEditButton();
+                alert('Request submitted');
+              }),
+              lang.hitch(this, function() {
+                this._toggleEditButton();
+                this.map.graphics.add(graphic);
+                alert('Request saved locally');
+              })
+            );
     },
 
-    // private functions
-    // _init: function() {
-    // },
 
     _toggleEditButton: function(e) {
       this.editing = !this.editing;
@@ -108,3 +116,4 @@ define([
   });
 
 });
+
